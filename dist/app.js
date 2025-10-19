@@ -14,7 +14,7 @@ const menu = {
     0: "Exit",
 };
 const displayMenu = () => {
-    console.log("===== SIMPLE TURNED BASE GAME =====".red);
+    console.log("\n===== SIMPLE TURNED BASE GAME =====\n".red);
     for (const [key, value] of Object.entries(menu)) {
         console.log(`${key}. ${value}`);
     }
@@ -34,7 +34,7 @@ const handleMenu = async () => {
             isRunning = false;
         }
         if (isRunning) {
-            await askQuestion(`\Press enter to continue...`);
+            await askQuestion(`\nPress enter to continue...\n`);
         }
     }
 };
