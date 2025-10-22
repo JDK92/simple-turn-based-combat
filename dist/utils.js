@@ -20,7 +20,10 @@ const showHPBar = (character) => {
     const { currentHP, maxHP } = character;
     let HPBaseChar = "0";
     let HPBar = "";
-    if (currentHP <= 30) {
+    if (currentHP <= 0) {
+        HPBar = "-";
+    }
+    else if (currentHP <= 30) {
         HPBar = HPBaseChar.repeat(Math.ceil(currentHP * 20 / 100)).red;
     }
     else if (currentHP <= 70) {

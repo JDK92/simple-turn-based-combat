@@ -26,7 +26,9 @@ export const showHPBar = (character: Character) => {
 
     let HPBar: string = "";
 
-    if (currentHP <= 30) {
+    if (currentHP <= 0) {
+        HPBar = "-";
+    } else if (currentHP <= 30) {
         HPBar = HPBaseChar.repeat(Math.ceil(currentHP * 20 / 100)).red;
     } else if (currentHP <= 70) {
         HPBar = HPBaseChar.repeat(Math.ceil(currentHP * 20 / 100)).yellow;

@@ -36,14 +36,14 @@ export const startGame = async (player: Character, enemy: Character) => {
 
         const { battleDone, message } = checkWinner(player, enemy);
 
+        console.log(`${player.name} [${showHPBar(player)}](${(player.currentHP <= 0) ? 0 : player.currentHP}/${player.maxHP})`);
+        console.log(`${enemy.name} [${showHPBar(enemy)}](${(enemy.currentHP <= 0) ? 0 : enemy.currentHP}/${enemy.maxHP})`);
+
         if (battleDone) {
             console.log(message);
             isRunning = !isRunning;
             break;
         }
-
-        console.log(`${player.name} [${showHPBar(player)}](${player.currentHP}/${player.maxHP})`);
-        console.log(`${enemy.name} [${showHPBar(enemy)}](${enemy.currentHP}/${enemy.maxHP})`);
 
         displayMenu(menu);
 
@@ -53,7 +53,7 @@ export const startGame = async (player: Character, enemy: Character) => {
 
         switch (answer) {
             case "1":
-                console.log(`${player.name} decides to attack`.cyan);
+                console.log(`\n${player.name} decides to attack`.cyan);
 
                 if (enemyMove === 1) {
                     console.log(`${enemy.name} decides to attack\n`.magenta);
@@ -76,7 +76,7 @@ export const startGame = async (player: Character, enemy: Character) => {
                 break;
 
             case "2":
-                console.log(`${player.name} decides to defend`.cyan);
+                console.log(`\n${player.name} decides to defend`.cyan);
 
                 if (enemyMove === 1) {
                     console.log(`${enemy.name} decides to attack\n`.magenta);
@@ -99,7 +99,7 @@ export const startGame = async (player: Character, enemy: Character) => {
                 break;
 
             case "3":
-                console.log(`Player decides to heal`);
+                console.log(`\n${player.name} decides to heal`.cyan);
                 player.currentHP = heal(player);
 
                 if (enemyMove === 1) {

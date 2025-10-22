@@ -26,19 +26,19 @@ const startGame = async (player, enemy) => {
     let isRunning = true;
     while (isRunning) {
         const { battleDone, message } = (0, utils_1.checkWinner)(player, enemy);
+        console.log(`${player.name} [${(0, utils_1.showHPBar)(player)}](${(player.currentHP <= 0) ? 0 : player.currentHP}/${player.maxHP})`);
+        console.log(`${enemy.name} [${(0, utils_1.showHPBar)(enemy)}](${(enemy.currentHP <= 0) ? 0 : enemy.currentHP}/${enemy.maxHP})`);
         if (battleDone) {
             console.log(message);
             isRunning = !isRunning;
             break;
         }
-        console.log(`${player.name} [${(0, utils_1.showHPBar)(player)}](${player.currentHP}/${player.maxHP})`);
-        console.log(`${enemy.name} [${(0, utils_1.showHPBar)(enemy)}](${enemy.currentHP}/${enemy.maxHP})`);
         (0, utils_1.displayMenu)(menu);
         const answer = await askQuestion(`\nWhat do you want to do?\n`);
         const enemyMove = (0, combat_1.setEnemyMove)();
         switch (answer) {
             case "1":
-                console.log(`${player.name} decides to attack`.cyan);
+                console.log(`\n${player.name} decides to attack`.cyan);
                 if (enemyMove === 1) {
                     console.log(`${enemy.name} decides to attack\n`.magenta);
                     enemy.currentHP = enemy.currentHP - ((0, combat_1.attack)(player) - enemy.def);
@@ -56,7 +56,7 @@ const startGame = async (player, enemy) => {
                 await askQuestion(`\nPress enter to continue...\n`.dim);
                 break;
             case "2":
-                console.log(`${player.name} decides to defend`.cyan);
+                console.log(`\n${player.name} decides to defend`.cyan);
                 if (enemyMove === 1) {
                     console.log(`${enemy.name} decides to attack\n`.magenta);
                     player.currentHP = player.currentHP - ((0, combat_1.attack)(enemy) - (0, combat_1.defend)(player));
@@ -73,7 +73,7 @@ const startGame = async (player, enemy) => {
                 await askQuestion(`\nPress enter to continue...\n`.dim);
                 break;
             case "3":
-                console.log(`Player decides to heal`);
+                console.log(`\n${player.name} decides to heal`.cyan);
                 player.currentHP = (0, combat_1.heal)(player);
                 if (enemyMove === 1) {
                     console.log(`${enemy.name} decides to attack\n`.magenta);
