@@ -1,43 +1,96 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+// Imports third party packages
 require("colors");
-const readline_1 = require("readline");
-const rl = (0, readline_1.createInterface)({
-    input: process.stdin,
-    output: process.stdout
-});
-const menu = {
-    1: "Attack",
-    2: "Defend",
-    3: "Cure",
-    4: "Status",
-    0: "Exit",
+const engine_1 = require("./engine");
+const player = {
+    name: 'Hero',
+    maxHP: 100,
+    currentHP: 100,
+    atk: 90,
+    def: 75,
+    bonus: 0.25
 };
-const displayMenu = () => {
-    console.log("\n===== SIMPLE TURNED BASE GAME =====\n".red);
-    for (const [key, value] of Object.entries(menu)) {
-        console.log(`${key}. ${value}`);
-    }
+const enemy = {
+    name: 'Demon',
+    maxHP: 100,
+    currentHP: 100,
+    atk: 90,
+    def: 80,
+    bonus: 0.015
 };
-const askQuestion = (question) => {
-    return new Promise(res => {
-        rl.question(question, res);
-    });
-};
-const handleMenu = async () => {
-    let isRunning = true;
-    while (isRunning) {
-        displayMenu();
-        const answer = await askQuestion("\nWhat do you want to do?\n");
-        console.log({ answer });
-        if (answer == 0) {
-            isRunning = false;
-        }
-        if (isRunning) {
-            await askQuestion(`\nPress enter to continue...\n`);
-        }
-    }
-};
-handleMenu().finally(() => {
-    rl.close();
-});
+// Interaction
+// const startGame = async (player: Character, enemy: Character) => {
+//     let isRunning: boolean = true;
+//     while (isRunning) {
+//         console.log(`Player [${showHPBar(player)}](${player.currentHP} / ${player.maxHP})`);
+//         console.log(`Enemy [${showHPBar(enemy)}](${enemy.currentHP} / ${enemy.maxHP})`);
+//         displayMenu();
+//         const answer = await askQuestion("\nWhat do you want to do?\n");
+//         const enemyMove = setEnemyMove();
+//         switch (answer) {
+//             case "1":
+//                 console.log(`Player decides to attack`);
+//                 if (enemyMove === 1) {
+//                     console.log("Enemy decides to attack!");
+//                 }
+//                 if (enemyMove === 2) {
+//                     console.log("Enemy raise its shield!!");
+//                 }
+//                 if (enemyMove === 3) {
+//                     console.log("Enemy is planning to heal");
+//                     enemy.currentHP = enemy.currentHP - (calcAtk(player) - enemy.def);
+//                     enemy.currentHP = calcHealing(enemy);
+//                 }
+//                 break;
+//             case "2":
+//                 console.log(`Player decides to defend`);
+//                 if (enemyMove === 1) {
+//                     console.log("Enemy decides to attack!");
+//                     player.currentHP = player.currentHP - (calcAtk(enemy) - calcDef(player));
+//                 }
+//                 if (enemyMove === 2) {
+//                     console.log("Enemy raise its shield!!");
+//                     console.log("No damage done...");
+//                 }
+//                 if (enemyMove === 3) {
+//                     console.log("Enemy is planning to heal");
+//                     enemy.currentHP = calcHealing(enemy);
+//                 }
+//                 break;
+//             case "3":
+//                 console.log(`Player decides to heal`);
+//                 if (enemyMove === 1) {
+//                     console.log("Enemy decides to attack!");
+//                     player.currentHP = player.currentHP - (calcAtk(enemy) - calcDef(player));
+//                     player.currentHP = calcHealing(player);
+//                 }
+//                 if (enemyMove === 2) {
+//                     console.log("Enemy raise its shield!!");
+//                     player.currentHP = calcHealing(player);
+//                     console.log("No damage done...");
+//                 }
+//                 if (enemyMove === 3) {
+//                     console.log("Enemy is planning to heal");
+//                     enemy.currentHP = calcHealing(enemy);
+//                     player.currentHP = calcHealing(player);
+//                 }
+//                 break;
+//             case "0":
+//                 console.log(`Player runs away from the fight`);
+//                 break;
+//             default:
+//                 console.log("\nInvalid option. Try again.\n")
+//                 break;
+//         }
+//         if (answer === "0") {
+//             isRunning = false;
+//         }
+//         if (isRunning) {
+//             await askQuestion(`\nPress enter to continue...\n`);
+//         }
+//     }
+// }
+// Start game
+console.clear();
+(0, engine_1.startGame)(player, enemy);
