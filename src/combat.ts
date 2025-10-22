@@ -2,13 +2,22 @@ import { Character } from './types';
 
 // Attack
 export const attack = (x: Character): number => {
-    const { bonus, atk } = x;
+    const { bonus, atk, name } = x;
+
+    let attackValue: number = 0;
 
     const luckyRoll: number = Math.round(Math.random() * 100) / 100;
 
     const hasBonus: boolean = (bonus > luckyRoll);
 
-    return (hasBonus) ? atk * 1.50 : atk;
+    if (hasBonus) {
+        attackValue = atk * 1.50;
+    } else {
+        attackValue = atk;
+    }
+
+    console.log(`${name} deals ${attackValue} damage`);
+    return attackValue;
 
 }
 

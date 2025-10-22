@@ -39,27 +39,30 @@ const startGame = async (player, enemy) => {
         switch (answer) {
             case "1":
                 console.log(`\n${player.name} decides to attack`.cyan);
+                const playerDamageAtk = (0, combat_1.attack)(player);
                 if (enemyMove === 1) {
+                    const enemyDamageAtk = (0, combat_1.attack)(enemy);
                     console.log(`${enemy.name} decides to attack\n`.magenta);
-                    enemy.currentHP = enemy.currentHP - ((0, combat_1.attack)(player) - enemy.def);
-                    player.currentHP = player.currentHP - ((0, combat_1.attack)(enemy) - player.def);
+                    enemy.currentHP = enemy.currentHP - (playerDamageAtk - enemy.def);
+                    player.currentHP = player.currentHP - (enemyDamageAtk - player.def);
                 }
                 if (enemyMove === 2) {
                     console.log(`${enemy.name} decides to defend\n`.magenta);
-                    enemy.currentHP = enemy.currentHP - ((0, combat_1.attack)(player) - (0, combat_1.defend)(enemy));
+                    enemy.currentHP = enemy.currentHP - (playerDamageAtk - (0, combat_1.defend)(enemy));
                 }
                 if (enemyMove === 3) {
                     console.log(`${enemy.name} decides to heal\n`.magenta);
+                    enemy.currentHP = enemy.currentHP - (playerDamageAtk - enemy.def);
                     enemy.currentHP = (0, combat_1.heal)(enemy);
-                    enemy.currentHP = enemy.currentHP - ((0, combat_1.attack)(player) - enemy.def);
                 }
                 await askQuestion(`\nPress enter to continue...\n`.dim);
                 break;
             case "2":
                 console.log(`\n${player.name} decides to defend`.cyan);
                 if (enemyMove === 1) {
+                    const enemyDamageAtk = (0, combat_1.attack)(enemy);
                     console.log(`${enemy.name} decides to attack\n`.magenta);
-                    player.currentHP = player.currentHP - ((0, combat_1.attack)(enemy) - (0, combat_1.defend)(player));
+                    player.currentHP = player.currentHP - (enemyDamageAtk - (0, combat_1.defend)(player));
                 }
                 if (enemyMove === 2) {
                     console.log(`${enemy.name} decides to defend\n`.magenta);
@@ -74,18 +77,21 @@ const startGame = async (player, enemy) => {
                 break;
             case "3":
                 console.log(`\n${player.name} decides to heal`.cyan);
-                player.currentHP = (0, combat_1.heal)(player);
                 if (enemyMove === 1) {
+                    const enemyDamageAtk = (0, combat_1.attack)(enemy);
                     console.log(`${enemy.name} decides to attack\n`.magenta);
-                    player.currentHP = player.currentHP - ((0, combat_1.attack)(enemy) - (0, combat_1.defend)(player));
+                    player.currentHP = player.currentHP - (enemyDamageAtk - (0, combat_1.defend)(player));
+                    player.currentHP = (0, combat_1.heal)(player);
                 }
                 if (enemyMove === 2) {
+                    player.currentHP = (0, combat_1.heal)(player);
                     console.log(`${enemy.name} decides to defend\n`.magenta);
                     console.log("No damage done...".bgWhite.black);
                 }
                 if (enemyMove === 3) {
-                    console.log(`${enemy.name} decides to heal\n`.magenta);
+                    player.currentHP = (0, combat_1.heal)(player);
                     enemy.currentHP = (0, combat_1.heal)(enemy);
+                    console.log(`${enemy.name} decides to heal\n`.magenta);
                     console.log("No damage done...".bgWhite.black);
                 }
                 await askQuestion(`\nPress enter to continue...\n`.dim);
